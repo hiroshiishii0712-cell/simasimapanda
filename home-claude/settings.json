@@ -11,6 +11,9 @@
       "Agent(evaluator)",
       "Agent(researcher)",
       "Agent(archiver)",
+      "Agent(skeptic)",
+      "Agent(architect)",
+      "Agent(minimalist)",
       "Agent(Explore)",
       "Agent(general-purpose)"
     ],

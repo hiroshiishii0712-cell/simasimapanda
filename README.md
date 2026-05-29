@@ -19,10 +19,13 @@
 ├── home-claude/           ← ローカル CLI 環境テンプレ(後で ~/.claude/ にコピー)
 │   ├── CLAUDE.md          ← ユーザー記憶(個人プロファイル雛形)
 │   ├── settings.json      ← グローバル設定雛形(Hooks/Permissions/Auto mode)
-│   ├── agents/            ← サブエージェント定義(コア 3 体)
-│   │   ├── evaluator.md
-│   │   ├── researcher.md
-│   │   └── archiver.md
+│   ├── agents/            ← サブエージェント定義
+│   │   ├── evaluator.md   ← コア:重要出力の独立検証
+│   │   ├── researcher.md  ← コア:Web/MCP 検索の専担
+│   │   ├── archiver.md    ← コア:Notion/Drive への整形保存
+│   │   ├── skeptic.md     ← 任意:Adversarial Review Team(懸念探し)
+│   │   ├── architect.md   ← 任意:Adversarial Review Team(構造評価)
+│   │   └── minimalist.md  ← 任意:Adversarial Review Team(過剰排除)
 │   ├── skills/            ← 自作 Skill(個人ドメイン特化)
 │   ├── hooks/             ← セッション/ターン lifecycle フック
 │   └── agent-hooks/       ← サブエージェント専用フック

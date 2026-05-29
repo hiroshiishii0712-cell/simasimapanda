@@ -124,6 +124,8 @@ push 通知。
 - チェックポイント機能の確認(途中中断 → 再開できるか)
 - コストが想定外なら subagent モデルを Sonnet/Haiku に落とす
 
+> **既導入 skill で同パターン**: ローカル環境には `/deep-research`(fan-out + verify)、`/investigate`(並列仮説 + 反証)、`/autopilot`(5-angle 批評 + 実装 + バグハント)、`/bugfix`(再現 → 修正 → 回帰)が既に installed されている。**自作 Dynamic Workflow を組む前に、これらでカバーできないか確認**するのが鉄則。
+
 ## 3-F. Agent View を日常運用に組み込む
 
 ```
@@ -167,6 +169,43 @@ claude agents --cwd ~/finance   # ドメイン別フィルタ
 - `finance-analyst`(opus, MCP=drive, `monthly-budget-report` skill preload)
 - `family-coordinator`(sonnet, MCP=gmail+calendar)
 - `travel-planner`(sonnet)
+
+## 3-I. Adversarial Review Team(任意・重要決定時のみ)
+
+- 重要決定(資産配分の大幅変更、住宅・教育・保険等の大きい契約、家族ルールの不可逆変更)では、3 つの独立 reviewer を**同ターンで並列 spawn** する
+- 3 体は `home-claude/agents/{skeptic,architect,minimalist}.md` に定義済(本リポに含まれる)。インストールは PHASE 3-A と同じ手順で `~/.claude/agents/` にコピー
+- 起動方法:
+  ```
+  > 次の判断について、skeptic / architect / minimalist の 3 視点で並列にレビューしてほしい:
+    [判断内容を貼る]
+  ```
+- 各 reviewer は**他の reviewer の出力を見ない**(context が分離される)→ 偏った合意ではなく独立した批判が揃う
+- 主 agent が 3 つの critique を統合し、利用者に提示
+- 月に 1-2 回程度の重要決定でのみ使う(毎回使うとコストが嵩み、判断が遅くなる)
+- evaluator との違い: evaluator は単独で「正しさ」を検証、3-lens team は「複数の視点から overall に sound か」を検証
+
+## 3-J. Advanced: background: true + isolation: worktree
+
+- 上級パターン。**コア 3 体運用が定着してから**試す
+- `background: true` の subagent は**新規ツール承認を自動 deny** する(意図しない権限拡大を防ぐ)
+- `isolation: worktree` で git worktree に隔離 → 同じファイルを並列に**別アプローチで**編集できる
+- 既存ビルトイン `/batch` コマンドはこのパターンで並列 codebase 移行を実装
+- 個人利用の活用例:
+  - 同じ家計プロンプトを 3 並列で楽観 / 中立 / 悲観の前提で評価
+  - 旅行行程を 3 並列で「コスト最優先」「時間最優先」「子供最優先」で生成
+  - レシピ整理を 3 並列で異なるカテゴリ体系で試行 → 比較
+- frontmatter 例:
+  ```yaml
+  ---
+  name: scenario-explorer
+  description: Explore one scenario in an isolated background subagent. Spawn 3 in parallel for comparison.
+  background: true
+  isolation: worktree
+  model: sonnet
+  effort: medium
+  maxTurns: 12
+  ---
+  ```
 
 ## 検証
 

@@ -12,7 +12,12 @@
 - 各重要 Skill に**評価サンプル**(input → expected output)を `SKILL.md` と並べて保管
 - 手動で 3-5 サンプル走らせて、出力が期待通りか確認
 
-### 2. Subagent ペアテスト(Anthropic 公式手法)
+### 2. 既導入 skill の active 利用確認
+- `/deep-research`、`/investigate`、`/autopilot`、`/bugfix`、`/code-review`、`/security-review`、`/verify` を 1 回ずつでも使ったか確認
+- 使われていない skill は CLAUDE.md / Project に「こういう時はこの skill を使う」のリマインダを追記
+- 既存 skill で目的を達成できる場面では自作 Skill / Subagent を作らない(2026 公式ベストプラクティス)
+
+### 3. Subagent ペアテスト(Anthropic 公式手法)
 同じプロンプトで「skill 有り subagent」「skill 無し subagent」を**同ターン spawn**、transcript を比較:
 ```
 > 同じプロンプトを、(A) finance-analyst skill 有りの evaluator と、
@@ -20,13 +25,13 @@
 ```
 → Skill の ROI が数値で見える
 
-### 3. Skill/Subagent クリーンアップ
+### 4. Skill/Subagent クリーンアップ
 ```
 /code-review --fix         # 定義ファイルの自動クリーンアップ
 /simplify                  # 冗長性削減(v2.1.154 改良版)
 ```
 
-### 4. `/usage` チェック
+### 5. `/usage` チェック
 ```
 /usage                     # モデル別/skill 別 breakdown
 ```
@@ -34,7 +39,7 @@
 - Opus 4.8 が必要ない場面で使われていないか
 - Sonnet/Haiku に落とせる subagent がないか
 
-### 5. Output Style の見直し
+### 6. Output Style の見直し
 - 学習中の分野は `learning` に切り替え忘れていないか
 - 不要になったカスタム style は `/output-style:delete`
 
@@ -88,6 +93,30 @@ ls -lh ~/.claude/agent-memory/*/MEMORY.md
 - 重要契約書(住宅、保険、教育)
 - 家族で共有する重要文書
 
+## 長期自走タスク(Ralph Loop パターン)
+
+- 既導入 `/loop` skill は **Ralph loop パターン**(コミュニティで著名な autonomous iteration loop)を実装している
+- 終わりが明確で時間がかかる作業を**新規セッション毎に同じプロンプト**で繰り返す。ファイルシステムをメモリ代わりに使い、git commit で進捗を残すため context bloat しない
+- 個人利用に向く長期自走タスクの例:
+  - 家計データを過去 3 年分すべて Notion に正規化
+  - 散らばったレシピメモを全部構造化 Markdown 化
+  - 写真フォルダの年次自動分類とメタデータ整理
+  - 学習プランの各セクション毎の参考資料収集
+- 起動例:
+  ```
+  /loop 30m
+  ```
+  → 30 分おきに同じプロンプトでセッションを回す。停止条件を満たすか、ユーザーが止めるまで続く
+- コスト目安: Sonnet 4.5/4.6 で API 課金なら ~$10/時間。Max 20× プランなら定額内に収まる
+- **安全装置**:
+  - 終了条件を明確にプロンプトに書く(「全データ移行完了 → 停止」)
+  - 各イテレーション後に git commit してロールバック保険
+  - 24 時間以内に手動レビュー(暴走確認)
+- **使ってはいけない場面**:
+  - 結果が可逆でないタスク(誤メール送信、家族予定の自動上書き)
+  - 終了条件が曖昧なタスク
+  - 機密データを大量に読み書きするタスク(`/usage` 監視必須)
+
 ## 年次メンテ
 
 ### 1. プラットフォーム全体の見直し
@@ -117,6 +146,9 @@ git push origin v2026-personal
 - `bypassPermissions` を常用する
 - Claude.ai Memory に金融情報や家族の個人情報を入れる
 - 自動化を一気に拡大する(段階的昇格の原則)
+- 既存 skill(`/deep-research`、`/investigate`、`/autopilot` 等)で実現できる用途を、わざわざ自作 Subagent / Skill で再実装する(車輪の再発明)
+- Ralph Loop(`/loop`)を **可逆でないタスク**で使う(誤動作のコストが取り返せない)
+- Adversarial Review Team を毎回呼ぶ(コスト過大、判断遅延)
 
 ## 関連ドキュメント
 - [ROADMAP.md](./ROADMAP.md) — 全体戦略(承認済プラン v4)

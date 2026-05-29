@@ -494,6 +494,61 @@ hooks:
 
 ---
 
+## 補遺: エージェント運用の追加発見(2026-05-29 追加リサーチ)
+
+本編の v4 プランを書き換えず、運用に取り込むべき 4 つの追加発見を以下に整理する。
+
+### 1. 3-Lens Adversarial Review Pattern(重要決定で活用)
+
+- 3 体の独立 reviewer subagent(**skeptic / architect / minimalist**)を**同ターンで並列 spawn** し、互いの結果を見ない状態で批判させる
+- 主 agent が 3 つの critique を統合し、矛盾点と合意点を整理してユーザーに提示
+- 単一 evaluator より**バイアスが構造的に分散**(reviewer 同士が引きずられない)
+- 出典: `dementev-dev/adversarial-review`、`claude-skills/engineering-team/skills/adversarial-reviewer`
+- 個人利用の発動条件:
+  - 資産配分の大きな変更(>10% シフト)
+  - 住宅・教育・保険の大きい契約(年額影響大)
+  - 家族ルールの不可逆変更(同居/教育方針/住所変更等)
+- 既に `home-claude/agents/{skeptic,architect,minimalist}.md` を本リポに追加済み。Phase 3 のコア 3 体(evaluator/researcher/archiver)と**併存**(役割が異なる: evaluator=単一視点の精査、3-Lens=多視点の対立)
+
+### 2. Ralph Loop(`/loop` skill で自律改善ループ)
+
+- 同じプロンプトを**毎回新規セッション**で繰り返し、各イテレーションで PRD/AGENTS.md を読み、`git commit` で差分を残すパターン
+- **ファイルシステム = メモリ**。会話履歴を context bloat させない設計
+- 既導入の `/loop` skill が同パターンを実装している(改めて作る必要なし)
+- 個人利用の典型ユースケース(終わりが明確な長期タスク):
+  - 家計データを完全に Notion に正規化
+  - レシピ集を全部構造化(食材・調理時間・カロリーをタグ付け)
+  - 未整理写真の年次分類
+  - 古いメール 10 年分のアーカイブ整理
+- コスト目安: Sonnet 4.5 で **~$10/h**、Max 20× プランなら**定額内に収まる**
+- 出典: `frankbria/ralph-claude-code`、`AnandChowdhary/continuous-claude`
+
+### 3. `background: true` + `isolation: worktree` の安全特性
+
+- `background: true` の subagent は**新規ツール承認を自動 deny** する(暴走時の重要な safety property)
+- `isolation: worktree` と組み合わせると、並列 agent が**同じファイルを別 worktree で編集**→ 結果を比較可能
+- 既存ビルトインの `/batch` コマンドがこのパターンを実装している
+- 個人利用例:
+  - 同じ家計プロンプトを 3 並列で**異なる前提(楽観・中立・悲観)** で試し、結果を比較
+  - 旅行プランを 3 並列で異なるテーマ(コスト最適化 / 体験重視 / 移動最小化)で展開
+  - レシピ最適化を**栄養優先 / 時短優先 / コスト優先**の 3 worktree で並走
+- 出典: Claude Code Sub-agents Docs(`initialPrompt`、`background`、`isolation: worktree` フィールド)
+
+### 4. 既導入 skill で多 agent パターンを再利用(自作の前に検討)
+
+本環境には下記 skill が既導入で、すでに Dynamic Workflow / multi-agent 相当パターンを実装している:
+
+| Skill | 実装パターン | 個人利用での使い所 |
+|---|---|---|
+| `/deep-research` | fan-out 検索 + adversarial verify + 集約 | 投資銘柄調査、住宅エリア比較、保険商品比較 |
+| `/investigate` | 並列仮説生成 + 反証 + 根本原因レポート | 家計の謎の支出増、家族の体調変化の原因探索 |
+| `/autopilot` | 5-angle 批評 + 計画 + 実装 + バグハント | コーディング系の長尺自己完結タスク |
+| `/bugfix` | 再現 → 根本原因 → 最小修正 → 回帰テスト | 自作スクリプトのバグ修正 |
+
+**運用ルール**: これらは自作 subagent より優先して活用する。自作するのは**これらでカバーされない用途のみ**(個人ドメイン固有の家計/家族系など)。Phase 3 のコア 3 体追加判断時にも、まず「既存 skill で代替可能か」を 1 段目チェックに置く。
+
+---
+
 ## オープン課題(ユーザー確認推奨)
 
 1. Claude.ai Web の Profile / Memory に既に書いた内容を共有してほしい(重複防止)
