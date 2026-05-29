@@ -1,0 +1,29 @@
+# 機密ファイルは絶対にコミットしない
+*.env
+*.env.*
+.env.local
+secrets/
+credentials*
+*-private.md
+
+# OS / Editor
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+*~
+
+# Claude Code runtime
+.claude/sessions/
+.claude/projects/
+.claude/backups/
+.claude/.last-cleanup
+
+# 個人プロファイルのローカル拡張(任意 — 機密が混入する可能性があれば)
+home-claude/CLAUDE.local.md
+home-claude/agent-memory/
+
+# ログ
+*.log
+*.jsonl
