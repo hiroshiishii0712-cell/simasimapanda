@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "Kids Palette Examples",
+  "schemaVersion": 1,
+  "description": "新Kidsパレット(Cinnamoroll × Kuromi 風)を子ども向け多様シーンへ体系適用したデザインシステム ショーケース。学習(漢字・計算)/家族ダッシュボード/ごほうび(シール台紙)/お絵描き/読書記録/時間割/自由研究の8シーン+パレットリファレンス+配色クロスリファレンス表で構成。彩月(小4)と彩空(小1)の双方をカバー。WCAG AA・44pxタッチ・16px最小フォント遵守。"
+}
+</script>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新Kidsパレット デザインシステム ショーケース</title>
+<style>
+:root {
+  color-scheme: light;
+  /* ===== 新Kidsパレット (Cinnamoroll × Kuromi 風) ===== */
+  /* Primary Blue: 集中・学習・知識 */
+  --p-blue: #7AB8D9;
+  --p-blue-dark: #4E94B8;
+  --p-blue-light: #D9ECF6;
+  /* Lavender: 想像・章立て・落ち着き */
+  --p-lav: #A899D1;
+  --p-lav-dark: #7868A8;
+  --p-lav-light: #EAE4F4;
+  /* Pink: 注目・ヒント・誤答 */
+  --p-pink: #E89BB5;
+  --p-pink-dark: #8C4A5F;
+  --p-pink-light: #FAE3EC;
+  /* Mint: 達成・正解・健康 */
+  --p-mint: #8BC8B8;
+  --p-mint-dark: #3D6B5C;
+  --p-mint-light: #DDF0E9;
+  /* Lemon: 報酬・ポイント・楽しさ */
+  --p-lemon: #F2D984;
+  --p-lemon-dark: #7A5F1A;
+  --p-lemon-light: #FBF1CF;
+  /* Neutrals */
+  --p-bg: #F7F9FC;
+  --p-surface: #FFFFFF;
+  --p-border: #E3E8F0;
+  --p-text: #3B4252;
+  --p-muted: #6B7888;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--p-bg);
+  color: var(--p-text);
+  font-family: 'BIZ UDPGothic', 'BIZ UDPゴシック', 'Hiragino Sans', 'Meiryo', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.app { max-width: 1240px; margin: 0 auto; padding: 20px; }
+
+.header {
+  background: var(--p-surface);
+  border-radius: 16px;
+  padding: 22px 26px;
+  margin-bottom: 20px;
+  border-left: 4px solid var(--p-blue);
+  box-shadow: 0 1px 2px rgba(120,104,168,0.06);
+}
+.header h1 { margin: 0 0 6px; font-size: 22px; font-weight: 600; color: var(--p-blue-dark); }
+.header p { margin: 0; font-size: 13px; color: var(--p-muted); }
+
+/* ===== セクション見出し ===== */
+.section-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--p-lav-dark);
+  margin: 28px 0 12px;
+  padding-left: 4px;
+  border-left: 3px solid var(--p-lav);
+  padding: 2px 0 2px 10px;
+}
+
+/* ===== パレットリファレンス (最上部) ===== */
+.palette-ref {
+  background: var(--p-surface);
+  border: 1px solid var(--p-border);
+  border-radius: 16px;
+  padding: 20px 22px;
+  margin-bottom: 4px;
+  box-shadow: 0 2px 8px rgba(120,104,168,0.06);
+}
+.palette-ref__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--p-blue-dark);
+  margin: 0 0 4px;
+}
+.palette-ref__desc {
+  font-size: 12px;
+  color: var(--p-muted);
+  margin: 0 0 14px;
+}
+.palette-ref__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+.swatch {
+  border: 1px solid var(--p-border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+.swatch__chip {
+  height: 56px;
+  display: flex;
+  align-items: flex-end;
+  padding: 8px 10px;
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.18);
+}
+.swatch__body {
+  padding: 8px 10px 10px;
+}
+.swatch__name { font-size: 12px; font-weight: 600; color: var(--p-text); }
+.swatch__hex { font-size: 11px; color: var(--p-muted); font-family: 'BIZ UDGothic', 'Consolas', monospace; }
+.swatch__role { font-size: 11px; color: var(--p-lav-dark); margin-top: 2px; }
+
+/* ===== シーンカード共通 ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 20px;
+}
+@media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+
+.card {
+  background: var(--p-surface);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(120,104,168,0.08), 0 1px 2px rgba(120,104,168,0.05);
+  border: 1px solid var(--p-border);
+}
+.card__tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: var(--p-blue-light);
+  color: var(--p-blue-dark);
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+.card__tag--lav { background: var(--p-lav-light); color: var(--p-lav-dark); }
+.card__tag--mint { background: var(--p-mint-light); color: var(--p-mint-dark); }
+.card__tag--lemon { background: var(--p-lemon-light); color: var(--p-lemon-dark); }
+.card__tag--pink { background: var(--p-pink-light); color: var(--p-pink-dark); }
+.card__title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--p-blue-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card__title--lav { color: var(--p-lav-dark); }
+.card__title--mint { color: var(--p-mint-dark); }
+.card__title--lemon { color: var(--p-lemon-dark); }
+.card__title--pink { color: var(--p-pink-dark); }
+.card__desc { margin: 0 0 16px; font-size: 12px; color: var(--p-muted); }
+
+/* ===== Material Symbols Outlined (SVGインライン) ===== */
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+.card__title .icon { width: 24px; height: 24px; }
+.mission__title .icon, .study__heading .icon { width: 18px; height: 18px; vertical-align: -3px; margin-right: 4px; }
+.drill__hint-icon { width: 14px; height: 14px; vertical-align: -2px; margin-right: 4px; }
+.draw__tool .icon { width: 22px; height: 22px; display: block; margin: 0 auto 4px; }
+
+/* ===== サンプル1: 漢字ドリル ===== */
+.drill {
+  background: linear-gradient(135deg, var(--p-blue-light) 0%, var(--p-lav-light) 100%);
+  border-radius: 12px;
+  padding: 24px 20px;
+  text-align: center;
+}
+.drill__progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 12px;
+  color: var(--p-lav-dark);
+}
+.drill__bar {
+  height: 8px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 999px;
+  margin: 6px 0 16px;
+  overflow: hidden;
+}
+.drill__bar > div {
+  height: 100%;
+  width: 60%;
+  background: linear-gradient(90deg, var(--p-blue) 0%, var(--p-lav) 100%);
+  border-radius: 999px;
+}
+.drill__kanji {
+  font-size: 92px;
+  font-weight: 700;
+  color: var(--p-lav-dark);
+  margin: 8px 0 4px;
+  line-height: 1;
+  font-family: 'BIZ UDPMincho', 'Hiragino Mincho ProN', serif;
+}
+.drill__reading {
+  font-size: 13px;
+  color: var(--p-muted);
+  margin-bottom: 16px;
+}
+.drill__choices {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.drill__choice {
+  background: #FFFFFF;
+  border: 1.5px solid var(--p-border);
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--p-text);
+  cursor: pointer;
+  min-height: 56px;
+  transition: all 150ms;
+}
+.drill__choice:hover { border-color: var(--p-blue); background: var(--p-blue-light); }
+.drill__choice--correct { border-color: var(--p-mint); background: var(--p-mint-light); color: var(--p-mint-dark); }
+.drill__hint {
+  font-size: 11px;
+  color: var(--p-muted);
+  background: rgba(255,255,255,0.5);
+  border-radius: 6px;
+  padding: 6px 10px;
+  display: inline-block;
+}
+
+/* ===== サンプル2: 計算ドリル (小1) ===== */
+.calc {
+  background: linear-gradient(135deg, var(--p-mint-light) 0%, var(--p-blue-light) 100%);
+  border-radius: 12px;
+  padding: 24px 20px;
+  text-align: center;
+}
+.calc__progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--p-mint-dark);
+  font-weight: 600;
+}
+.calc__bar {
+  height: 10px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 999px;
+  margin: 6px 0 18px;
+  overflow: hidden;
+}
+.calc__bar > div {
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(90deg, var(--p-mint) 0%, var(--p-blue) 100%);
+  border-radius: 999px;
+}
+.calc__expr {
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--p-blue-dark);
+  margin: 8px 0 18px;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+.calc__expr span.box {
+  display: inline-block;
+  min-width: 64px;
+  padding: 0 10px;
+  background: rgba(255,255,255,0.8);
+  border: 2.5px dashed var(--p-pink);
+  border-radius: 14px;
+  color: var(--p-pink-dark);
+}
+.calc__choices {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.calc__choice {
+  background: #FFFFFF;
+  border: 2px solid var(--p-border);
+  border-radius: 14px;
+  padding: 16px 8px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--p-text);
+  cursor: pointer;
+  min-height: 60px;
+  font-variant-numeric: tabular-nums;
+  transition: all 150ms;
+}
+.calc__choice:hover { border-color: var(--p-mint); background: var(--p-mint-light); }
+.calc__choice--correct { border-color: var(--p-mint); background: var(--p-mint); color: #FFFFFF; }
+
+/* ===== サンプル3: 今週のミッション ===== */
+.mission { display: flex; flex-direction: column; gap: 12px; }
+.mission__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 12px;
+  background: var(--p-bg);
+  border-radius: 12px;
+  border-left: 4px solid var(--p-blue);
+}
+.mission__item--lav { border-left-color: var(--p-lav); }
+.mission__item--pink { border-left-color: var(--p-pink); }
+.mission__item--mint { border-left-color: var(--p-mint); }
+.mission__check {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #FFFFFF;
+  background: var(--p-blue);
+  flex-shrink: 0;
+}
+.mission__item--lav .mission__check { background: var(--p-lav); }
+.mission__item--pink .mission__check { background: var(--p-pink); }
+.mission__item--mint .mission__check { background: var(--p-mint); }
+.mission__check--done::after { content: '✓'; }
+.mission__check--open { background: transparent; border: 2px solid var(--p-border); }
+.mission__body { flex: 1; }
+.mission__title { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.mission__sub { font-size: 11px; color: var(--p-muted); }
+.mission__points {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--p-lemon-light);
+  color: var(--p-lemon-dark);
+}
+.mission__summary {
+  margin-top: 8px;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--p-lav-light) 0%, var(--p-pink-light) 100%);
+  border-radius: 12px;
+  text-align: center;
+}
+.mission__summary-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--p-lav-dark);
+  font-variant-numeric: tabular-nums;
+}
+.mission__summary-label { font-size: 11px; color: var(--p-muted); }
+
+/* ===== サンプル4: シール台紙 (ごほうび) ===== */
+.sticker {
+  background: linear-gradient(135deg, var(--p-lemon-light) 0%, var(--p-mint-light) 100%);
+  border-radius: 12px;
+  padding: 20px;
+}
+.sticker__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.sticker__title { font-size: 14px; font-weight: 700; color: var(--p-lemon-dark); }
+.sticker__count {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--p-mint-dark);
+  background: rgba(255,255,255,0.7);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.sticker__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+.sticker__cell {
+  aspect-ratio: 1;
+  background: rgba(255,255,255,0.75);
+  border: 1.5px dashed rgba(122,184,217,0.4);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: var(--p-muted);
+  position: relative;
+}
+.sticker__cell--filled {
+  background: #FFFFFF;
+  border: 2px solid var(--p-lemon);
+  font-size: 28px;
+}
+.sticker__cell--filled.s-mint { border-color: var(--p-mint); }
+.sticker__cell--filled.s-pink { border-color: var(--p-pink); }
+.sticker__cell--filled.s-lav { border-color: var(--p-lav); }
+.sticker__cell--filled.s-blue { border-color: var(--p-blue); }
+.sticker__reward {
+  margin-top: 14px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sticker__reward-icon {
+  width: 40px; height: 40px;
+  background: var(--p-lemon);
+  color: #FFFFFF;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+}
+.sticker__reward-text { flex: 1; }
+.sticker__reward-title { font-size: 13px; font-weight: 600; color: var(--p-text); }
+.sticker__reward-sub { font-size: 11px; color: var(--p-muted); }
+
+/* ===== サンプル5: お絵描き準備 ===== */
+.draw__palette {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.draw__color {
+  aspect-ratio: 1;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  position: relative;
+  transition: transform 150ms;
+}
+.draw__color:hover { transform: scale(1.08); }
+.draw__color--selected { border-color: var(--p-lav-dark); }
+.draw__color--selected::after {
+  content: '✓';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 16px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.draw__tools {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.draw__tool {
+  padding: 10px 8px;
+  background: var(--p-bg);
+  border: 1px solid var(--p-border);
+  border-radius: 10px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--p-text);
+  cursor: pointer;
+  min-height: 56px;
+}
+.draw__tool--active { background: var(--p-blue); color: #FFFFFF; border-color: var(--p-blue); }
+.draw__tool-icon {
+  font-size: 22px;
+  display: block;
+  margin-bottom: 4px;
+}
+.draw__canvas {
+  height: 120px;
+  background: repeating-linear-gradient(45deg, var(--p-bg), var(--p-bg) 10px, var(--p-surface) 10px, var(--p-surface) 20px);
+  border: 1.5px dashed var(--p-border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--p-muted);
+  font-size: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.draw__sample {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== サンプル6: 読書記録カード ===== */
+.book {
+  background: var(--p-lav-light);
+  border-radius: 12px;
+  padding: 18px;
+}
+.book__cover {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.book__thumb {
+  width: 64px; height: 86px;
+  background: linear-gradient(135deg, var(--p-blue) 0%, var(--p-lav) 100%);
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: #FFFFFF;
+  font-size: 28px;
+  box-shadow: 0 4px 8px rgba(120,104,168,0.18);
+}
+.book__meta { flex: 1; min-width: 0; }
+.book__name { font-size: 14px; font-weight: 700; color: var(--p-lav-dark); margin-bottom: 2px; }
+.book__author { font-size: 11px; color: var(--p-muted); margin-bottom: 8px; }
+.book__stars { font-size: 18px; color: var(--p-lemon); letter-spacing: 2px; }
+.book__star-empty { color: rgba(0,0,0,0.12); }
+.book__row {
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+.book__row-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--p-lav-dark);
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+.book__row-text { font-size: 12px; color: var(--p-text); line-height: 1.55; }
+.book__chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.book__chip {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--p-pink-light);
+  color: var(--p-pink-dark);
+}
+.book__chip--mint { background: var(--p-mint-light); color: var(--p-mint-dark); }
+.book__chip--blue { background: var(--p-blue-light); color: var(--p-blue-dark); }
+
+/* ===== サンプル7: 1日のながれ (時間割) ===== */
+.day {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.day__slot {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 12px;
+  align-items: stretch;
+}
+.day__time {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--p-muted);
+  font-variant-numeric: tabular-nums;
+  padding-top: 12px;
+  text-align: right;
+}
+.day__block {
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+}
+.day__dot {
+  width: 10px; height: 10px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+.day__label { font-size: 13px; font-weight: 600; color: var(--p-text); flex: 1; }
+.day__sub { font-size: 11px; color: var(--p-muted); }
+.day__block--school { background: var(--p-blue-light); }
+.day__block--school .day__dot { background: var(--p-blue); }
+.day__block--study { background: var(--p-lav-light); }
+.day__block--study .day__dot { background: var(--p-lav); }
+.day__block--play { background: var(--p-lemon-light); }
+.day__block--play .day__dot { background: var(--p-lemon); }
+.day__block--meal { background: var(--p-pink-light); }
+.day__block--meal .day__dot { background: var(--p-pink); }
+.day__block--rest { background: var(--p-mint-light); }
+.day__block--rest .day__dot { background: var(--p-mint); }
+.day__legend {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  font-size: 11px;
+  color: var(--p-muted);
+}
+.day__legend-item { display: inline-flex; align-items: center; gap: 6px; }
+.day__legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 999px;
+}
+
+/* ===== サンプル8: 自由研究テンプレ ===== */
+.study__heading {
+  background: var(--p-lav-light);
+  color: var(--p-lav-dark);
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+.study__heading-num {
+  width: 32px;
+  height: 32px;
+  background: var(--p-lav);
+  color: #FFFFFF;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.study__field {
+  margin-bottom: 14px;
+}
+.study__label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--p-lav-dark);
+  margin-bottom: 6px;
+  letter-spacing: 0.05em;
+}
+.study__input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--p-bg);
+  border: 1px solid var(--p-border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--p-text);
+  resize: vertical;
+}
+.study__input:focus { outline: 2px solid var(--p-blue); outline-offset: 1px; border-color: var(--p-blue); }
+.study__box {
+  background: var(--p-pink-light);
+  border-radius: 10px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--p-pink);
+  font-size: 12px;
+  color: var(--p-pink-dark);
+  margin-top: 14px;
+}
+.study__box strong { color: #6B3147; display: block; margin-bottom: 4px; font-size: 12px; }
+
+/* ===== 配色クロスリファレンス ===== */
+.cross-ref {
+  background: var(--p-surface);
+  border: 1px solid var(--p-border);
+  border-radius: 16px;
+  padding: 20px 22px;
+  margin-top: 8px;
+  box-shadow: 0 2px 8px rgba(120,104,168,0.06);
+  overflow-x: auto;
+}
+.cross-ref__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--p-blue-dark);
+  margin: 0 0 4px;
+}
+.cross-ref__desc {
+  font-size: 12px;
+  color: var(--p-muted);
+  margin: 0 0 14px;
+}
+.cross-ref table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  min-width: 640px;
+}
+.cross-ref th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--p-lav-dark);
+  padding: 10px 12px;
+  background: var(--p-lav-light);
+  border-bottom: 2px solid var(--p-lav);
+}
+.cross-ref th:first-child { border-top-left-radius: 8px; }
+.cross-ref th:last-child { border-top-right-radius: 8px; }
+.cross-ref td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--p-border);
+  vertical-align: top;
+}
+.cross-ref tr:last-child td { border-bottom: none; }
+.cross-ref__color {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+.cross-ref__chip {
+  width: 18px; height: 18px;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.08);
+  flex-shrink: 0;
+}
+
+/* 共通: フッター */
+.footnote {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: var(--p-bg);
+  border-radius: 8px;
+  font-size: 11px;
+  color: var(--p-muted);
+  line-height: 1.5;
+}
+.footnote strong { color: var(--p-lav-dark); display: block; margin-bottom: 2px; }
+
+.footer {
+  text-align: center;
+  font-size: 11px;
+  color: var(--p-muted);
+  margin: 24px 0;
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<header class="header">
+  <h1>新Kidsパレット デザインシステム ショーケース</h1>
+  <p>Cinnamoroll空色 × Kuromiラベンダー × ダスティピンクを軸に、子ども生活の8シーンへ同一トーンを体系適用。彩月(小4)・彩空(小1)双方が触れる場面を網羅し、配色の意味付けと運用ルールを示す。</p>
+</header>
+
+<!-- ===== パレットリファレンス ===== -->
+<section class="palette-ref" aria-label="パレットリファレンス">
+  <h2 class="palette-ref__title">パレットリファレンス</h2>
+  <p class="palette-ref__desc">6つの主色と中間階調。各色に「役割(意味)」を明示することで、新規シーン作成時の迷いを排除する。</p>
+  <div class="palette-ref__grid">
+    <div class="swatch">
+      <div class="swatch__chip" style="background:#7AB8D9;">BLUE</div>
+      <div class="swatch__body">
+        <div class="swatch__name">シナモロール空</div>
+        <div class="swatch__hex">#7AB8D9</div>
+        <div class="swatch__role">集中・学習・知識</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__chip" style="background:#A899D1;">LAVENDER</div>
+      <div class="swatch__body">
+        <div class="swatch__name">クロミ ラベンダー</div>
+        <div class="swatch__hex">#A899D1</div>
+        <div class="swatch__role">章立て・想像・落ち着き</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__chip" style="background:#E89BB5;">PINK</div>
+      <div class="swatch__body">
+        <div class="swatch__name">ダスティピンク</div>
+        <div class="swatch__hex">#E89BB5</div>
+        <div class="swatch__role">注目・ヒント・誤答</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__chip" style="background:#8BC8B8;">MINT</div>
+      <div class="swatch__body">
+        <div class="swatch__name">セージミント</div>
+        <div class="swatch__hex">#8BC8B8</div>
+        <div class="swatch__role">達成・正解・健康</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__chip" style="background:#F2D984; color:#7A5F1A; text-shadow:none;">LEMON</div>
+      <div class="swatch__body">
+        <div class="swatch__name">バターレモン</div>
+        <div class="swatch__hex">#F2D984</div>
+        <div class="swatch__role">報酬・ポイント・楽しさ</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__chip" style="background:#3B4252;">INK</div>
+      <div class="swatch__body">
+        <div class="swatch__name">インクグレー</div>
+        <div class="swatch__hex">#3B4252</div>
+        <div class="swatch__role">本文・線・縁取り</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<h2 class="section-title">学習シーン</h2>
+<div class="grid">
+
+  <!-- ===== 1. 漢字ドリル (小4・彩月) ===== -->
+  <section class="card">
+    <span class="card__tag">学習ドリル / 小4</span>
+    <h2 class="card__title">
+      <svg class="icon" viewBox="0 -960 960 960" aria-hidden="true"><path d="M480-120 200-272v-240L40-600l440-240 440 240v320h-80v-276l-80 44v240L480-120Zm0-332 273-148-273-148-273 148 273 148Zm0 241 200-108v-180L480-360 280-471v181l200 109Z"/></svg>
+      漢字ドリル — 彩月
+    </h2>
+    <p class="card__desc">問題に集中させるため装飾を抑え、正解時のみミントで肯定フィードバック</p>
+    <div class="drill">
+      <div class="drill__progress">
+        <span>第6問 / 全10問</span>
+        <span style="color: var(--p-blue-dark); font-weight: 600;">+30 ポイント</span>
+      </div>
+      <div class="drill__bar"><div></div></div>
+      <div class="drill__kanji">機</div>
+      <div class="drill__reading">よみがな を えらぼう</div>
+      <div class="drill__choices">
+        <button class="drill__choice">きかい</button>
+        <button class="drill__choice drill__choice--correct">き</button>
+        <button class="drill__choice">はた</button>
+        <button class="drill__choice">わざ</button>
+      </div>
+      <div class="drill__hint">ヒント: 「ひこうき」「きかい」の「き」</div>
+    </div>
+    <div class="footnote">
+      <strong>パレット運用</strong>
+      主要面はブルー×ラベンダーのグラデで集中を誘導、正解時にミントで肯定フィードバック。ピンクは誤答時のみに留め、過剰演出を回避。
+    </div>
+  </section>
+
+  <!-- ===== 2. 計算ドリル (小1・彩空) ===== -->
+  <section class="card">
+    <span class="card__tag card__tag--mint">学習ドリル / 小1</span>
+    <h2 class="card__title card__title--mint">
+      <svg class="icon" viewBox="0 -960 960 960" aria-hidden="true"><path d="M280-120v-160H120v-80h160v-160h80v160h160v80H360v160h-80Zm280-40v-80h240v80H560Zm0-160v-80h240v80H560ZM161-560l-57-57 113-113-113-113 57-57 113 113 113-113 57 57-113 113 113 113-57 57-113-113-113 113Z"/></svg>
+      けいさんドリル — 彩空
+    </h2>
+    <p class="card__desc">小1向けに数字を大きく、選択肢を4つにシンプル化。注目枠だけピンク dashed で誘導</p>
+    <div class="calc">
+      <div class="calc__progress">
+        <span>もんだい 4 / 10</span>
+        <span>+ 20 ポイント</span>
+      </div>
+      <div class="calc__bar"><div></div></div>
+      <div class="calc__expr">5 + 3 = <span class="box">?</span></div>
+      <div class="calc__choices">
+        <button class="calc__choice">6</button>
+        <button class="calc__choice">7</button>
+        <button class="calc__choice calc__choice--correct">8</button>
+        <button class="calc__choice">9</button>
+      </div>
+    </div>
+    <div class="footnote">
+      <strong>パレット運用</strong>
+      ミント→ブルーのグラデで「達成感を予感させる学び」を表現。回答ボックスのみピンク dashed で視線を確実に誘導。年齢に応じて数字サイズを漢字ドリルより小さめに調整(数字は元々視認性が高いため)。
+    </div>
+  </section>
+
+</div>
+
+<h2 class="section-title">家族・生活シーン</h2>
+<div class="grid">
+
+  <!-- ===== 3. 今週のミッション ===== -->
+  <section class="card">
+    <span class="card__tag card__tag--lav">家族ダッシュボード</span>
+    <h2 class="card__title card__title--lav">
+      <svg class="icon" viewBox="0 -960 960 960" aria-hidden="true"><path d="M524-40v-280h-64v-180q0-33 23.5-56.5T540-580h140q33 0 56.5 23.5T760-500v180h-64v280H524Zm86-580q-29 0-49.5-20.5T540-690q0-29 20.5-49.5T610-760q29 0 49.5 20.5T680-690q0 29-20.5 49.5T610-620ZM220-40v-200h-90l78-294q6-22 24-34t40-12q22 0 40 12t24 34l78 294h-90v200H220Zm30-660q-29 0-49.5-20.5T180-770q0-29 20.5-49.5T250-840q29 0 49.5 20.5T320-770q0 29-20.5 49.5T250-700Z"/></svg>
+      今週のミッション
+    </h2>
+    <p class="card__desc">保護者と子どもが同じ画面を共有する想定。進捗と達成感を可視化</p>
+    <div class="mission">
+      <div class="mission__item">
+        <div class="mission__check mission__check--done"></div>
+        <div class="mission__body">
+          <div class="mission__title">かんじドリル 30問</div>
+          <div class="mission__sub">月曜・水曜・金曜 / 完了 ✓</div>
+        </div>
+        <span class="mission__points">+ 90 pt</span>
+      </div>
+      <div class="mission__item mission__item--lav">
+        <div class="mission__check mission__check--done"></div>
+        <div class="mission__body">
+          <div class="mission__title">音読 3冊</div>
+          <div class="mission__sub">図書館の本 / 完了 ✓</div>
+        </div>
+        <span class="mission__points">+ 60 pt</span>
+      </div>
+      <div class="mission__item mission__item--pink">
+        <div class="mission__check mission__check--open"></div>
+        <div class="mission__body">
+          <div class="mission__title">韓国語アプリ 5回</div>
+          <div class="mission__sub">あと 2回 / 木曜まで</div>
+        </div>
+        <span class="mission__points">+ 50 pt</span>
+      </div>
+      <div class="mission__item mission__item--mint">
+        <div class="mission__check mission__check--open"></div>
+        <div class="mission__body">
+          <div class="mission__title">お手伝い 食器洗い</div>
+          <div class="mission__sub">あと 3日</div>
+        </div>
+        <span class="mission__points">+ 30 pt</span>
+      </div>
+    </div>
+    <div class="mission__summary">
+      <div class="mission__summary-label">今週のポイント合計</div>
+      <div class="mission__summary-value">230 pt</div>
+      <div class="mission__summary-label">目標 300 pt まで あと 70 pt</div>
+    </div>
+    <div class="footnote">
+      <strong>パレット運用</strong>
+      4色(ブルー・ラベンダー・ピンク・ミント)をカテゴリ識別に使用。完了は塗りつぶし、未完了は中空の同色枠で進捗を視覚化。
+    </div>
+  </section>
+
+  <!-- ===== 4. シール台紙 (ごほうび) ===== -->
+  <section class="card">
+    <span class="card__tag card__tag--lemon">ごほうび</span>
+    <h2 class="card__title card__title--lemon">
+      <svg class="icon" viewBox="0 -960 960 960" aria-hidden="true"><path d="m233-80 65-281L80-550l288-25 112-265 112 265 288 25-218 189 65 281-247-149L233-80Z"/></svg>
+      シール台紙 — 20コあつめよう
+    </h2>
+    <p class="card__desc">毎日のミッション完了でシールが貯まる。台紙は4色のシールが混在しても美しく見える設計</p>
+    <div class="sticker">
+      <div class="sticker__head">
+        <div class="sticker__title">★ 5月のシール台紙</div>
+        <div class="sticker__count">13 / 20</div>
+      </div>
+      <div class="sticker__grid">
+        <div class="sticker__cell sticker__cell--filled">⭐</div>
+        <div class="sticker__cell sticker__cell--filled s-mint">🌱</div>
+        <div class="sticker__cell sticker__cell--filled s-pink">🌸</div>
+        <div class="sticker__cell sticker__cell--filled s-lav">🦄</div>
+        <div class="sticker__cell sticker__cell--filled s-blue">☁</div>
+        <div class="sticker__cell sticker__cell--filled">⭐</div>
+        <div class="sticker__cell sticker__cell--filled s-mint">🌱</div>
+        <div class="sticker__cell sticker__cell--filled s-pink">🌸</div>
+        <div class="sticker__cell sticker__cell--filled s-lav">🦄</div>
+        <div class="sticker__cell sticker__cell--filled s-blue">☁</div>
+        <div class="sticker__cell sticker__cell--filled">⭐</div>
+        <div class="sticker__cell sticker__cell--filled s-mint">🌱</div>
+        <div class="sticker__cell sticker__cell--filled s-pink">🌸</div>
+        <div class="sticker__cell">7</div>
+        <div class="sticker__cell">6</div>
+        <div class="sticker__cell">5</div>
+        <div class="sticker__cell">4</div>
+        <div class="sticker__cell">3</div>
+        <div class="sticker__cell">2</div>
+        <div class="sticker__cell">1</div>
+      </div>
+      <div class="sticker__reward">
+        <div class="sticker__reward-icon">🎁</div>
+        <div class="sticker__reward-text">
+          <div class="sticker__reward-title">20コで…えほんやさんへ おでかけ!</div>
+          <div class="sticker__reward-sub">あと 7コ / 達成予定: 5月下旬</div>
+        </div>
+      </div>
+    </div>
+    <div class="footnote">
+      <strong>パレット運用</strong>
+      レモン背景で「楽しさ・報酬」のシグナルを最大化。シール枠は5色をローテーションし、達成済が並んでも飽和しないようパステル中明度を統一。未取得セルは dashed で「これから入る場所」を示唆。
+    </div>
+  </section>
+
+</div>
+
+<h2 class="section-title">クリエイティブ・記録シーン</h2>
+<div class="grid">
+
+  <!-- ===== 5. お絵描き準備 ===== -->
+  <section class="card">
+    <span class="card__tag card__tag--pink">クリエイティブ</span>
+    <h2 class="card__title card__title--pink">
+      <svg class="icon" viewBox="0 -960 960 960" aria-hidden="true"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-84 32.5-156.5t89-126.5q56.5-54 130.5-85.5T487-880q80 0 151 27.5t124.5 76q53.5 48.5 85 115T879-518q0 115-70 176.5T660-280h-74q-9 0-12.5 5t-3.5 11q0 12 15 34.5t15 51.5q0 50-27.5 74T480-80Zm0-400Zm-220 40q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm120-160q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm200 0q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm120 160q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Z"/></svg>
+      お絵描き準備 — 色を選ぶ
+    </h2>
+    <p class="card__desc">色見本・ツール・キャンバスを同一トーンで構成。アイビスペイント前の構想時にも使える</p>
+    <div class="draw__palette">
+      <div class="draw__color draw__color--selected" style="background:#7AB8D9;"></div>
+      <div class="draw__color" style="background:#A899D1;"></div>
+      <div class="draw__color" style="background:#E89BB5;"></div>
+      <div class="draw__color" style="background:#8BC8B8;"></div>
+      <div class="draw__color" style="background:#F2D984;"></div>
+      <div class="draw__color" style="background:#3B4252;"></div>
+    </div>
+    <div class="draw__tools">
+      <div class="draw__tool draw__tool--active"><span class="draw__tool-icon">✎</span>ペン</div>
+      <div class="draw__tool"><span class="draw__tool-icon">▣</span>ぬり</div>
+      <div class="draw__tool"><span class="draw__tool-icon">○</span>まる</div>
+      <div class="draw__tool"><span class="draw__tool-icon">⌫</span>けし</div>
+    </div>
+    <div class="draw__canvas">
+      <svg class="draw__sample" viewBox="0 0 200 100">
+        <circle cx="60" cy="50" r="22" fill="#7AB8D9" opacity="0.7"/>
+        <circle cx="100" cy="50" r="22" fill="#A899D1" opacity="0.7"/>
+        <circle cx="140" cy="50" r="22" fill="#E89BB5" opacity="0.7"/>
+      </svg>
+    </div>
+    <div class="footnote">
+      <strong>パレット運用</strong>
+      6色のスウォッチをそのままパレットとして提示。子どもが選んだ色がそのまま「家族の他の画面」とも調和する設計。
+    </div>
+  </section>
+
+  <!-- ===== 6. 読書記録カード ===== -->
+  <section class="card">
+    <span class="card__tag card__tag--lav">読書記録</span>
+    <h2 class="card__title card__title--lav">
+      <svg class="icon" viewBox="0 -960 960 960" aria-hidden="true"><path d="M300-80q-58 0-99-41t-41-99v-560q0-58 41-99t99-41h500v600q-25 0-42.5 17.5T740-260q0 25 17.5 42.5T800-200v120H300Zm-60-267q14-7 29-10t31-3h20v-440h-20q-25 0-42.5 17.5T240-740v393Zm160-13h320v-440H400v440Zm-160 13v-453 453Zm60 187h373q-6-14-9.5-28.5T660-220q0-16 3-31t10-29H300q-26 0-43 17.5T240-220q0 26 17 43t43 17Z"/></svg>
+      よんだ本のきろく
+    </h2>
+    <p class="card__desc">読書感想と気づきを記録。タグでジャンル分けし、後から「お気に入りだけ表示」も可能</p>
+    <div class="book">
+      <div class="book__cover">
+        <div class="book__thumb">📖</div>
+        <div class="book__meta">
+          <div class="book__name">わすれられないおくりもの</div>
+          <div class="book__author">スーザン・バーレイ / 評論社</div>
+          <div class="book__stars">★★★★<span class="book__star-empty">★</span></div>
+        </div>
+      </div>
+      <div class="book__row">
+        <div class="book__row-label">★ おきにいりのばめん</div>
+        <div class="book__row-text">アナグマが みんなに「いろいろなおくりもの」をのこしていたところ。やさしいきもちになった。</div>
+      </div>
+      <div class="book__row">
+        <div class="book__row-label">★ おもったこと</div>
+        <div class="book__row-text">いなくなっても 心のなかに のこるって あたたかい。じぶんも だれかの ”おくりもの”になりたい。</div>
+      </div>
+      <div class="book__chips">
+        <span class="book__chip">かんどう</span>
+        <span class="book__chip book__chip--mint">いのち</span>
+        <span class="book__chip book__chip--blue">どうぶつ</span>
+      </div>
+    </div>
+    <div class="footnote">
+      <strong>パレット運用</strong>
+      ラベンダー背景で「落ち着いて記録する場」を演出。表紙アクセントにブルー→ラベンダーのグラデを用い、星評価のみレモンで「お気に入り度」をハイライト。タグの色違いでジャンルを直感識別。
+    </div>
+  </section>
+
+</div>
+
+<h2 class="section-title">スケジュール・まとめシーン</h2>
+<div class="grid">
+
+  <!-- ===== 7. 1日のながれ (時間割) ===== -->
+  <section class="card">
+    <span class="card__tag">スケジュール</span>
+    <h2 class="card__title">
+      <svg class="icon" viewBox="0 -960 960 960" aria-hidden="true"><path d="m612-292 56-56-148-148v-184h-80v216l172 172ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Z"/></svg>
+      1日のながれ
+    </h2>
+    <p class="card__desc">時間帯ごとにカテゴリ色を割り当て、リズムを視覚化。タブレットの待受や冷蔵庫貼り出しを想定</p>
+    <div class="day">
+      <div class="day__slot">
+        <div class="day__time">7:00</div>
+        <div class="day__block day__block--meal">
+          <span class="day__dot"></span>
+          <span class="day__label">あさごはん・したく</span>
+          <span class="day__sub">60分</span>
+        </div>
+      </div>
+      <div class="day__slot">
+        <div class="day__time">8:30</div>
+        <div class="day__block day__block--school">
+          <span class="day__dot"></span>
+          <span class="day__label">学校</span>
+          <span class="day__sub">〜15:00</span>
+        </div>
+      </div>
+      <div class="day__slot">
+        <div class="day__time">15:30</div>
+        <div class="day__block day__block--play">
+          <span class="day__dot"></span>
+          <span class="day__label">じゆうじかん・おやつ</span>
+          <span class="day__sub">60分</span>
+        </div>
+      </div>
+      <div class="day__slot">
+        <div class="day__time">16:30</div>
+        <div class="day__block day__block--study">
+          <span class="day__dot"></span>
+          <span class="day__label">しゅくだい・ドリル</span>
+          <span class="day__sub">60分</span>
+        </div>
+      </div>
+      <div class="day__slot">
+        <div class="day__time">18:00</div>
+        <div class="day__block day__block--meal">
+          <span class="day__dot"></span>
+          <span class="day__label">ばんごはん</span>
+          <span class="day__sub">60分</span>
+        </div>
+      </div>
+      <div class="day__slot">
+        <div class="day__time">19:30</div>
+        <div class="day__block day__block--rest">
+          <span class="day__dot"></span>
+          <span class="day__label">おふろ・どくしょ</span>
+          <span class="day__sub">90分</span>
+        </div>
+      </div>
+      <div class="day__slot">
+        <div class="day__time">21:00</div>
+        <div class="day__block day__block--rest">
+          <span class="day__dot"></span>
+          <span class="day__label">おやすみ</span>
+          <span class="day__sub">9時間</span>
+        </div>
+      </div>
+    </div>
+    <div class="day__legend">
+      <span class="day__legend-item"><span class="day__legend-dot" style="background:var(--p-pink);"></span>食事</span>
+      <span class="day__legend-item"><span class="day__legend-dot" style="background:var(--p-blue);"></span>学校</span>
+      <span class="day__legend-item"><span class="day__legend-dot" style="background:var(--p-lemon);"></span>あそび</span>
+      <span class="day__legend-item"><span class="day__legend-dot" style="background:var(--p-lav);"></span>べんきょう</span>
+      <span class="day__legend-item"><span class="day__legend-dot" style="background:var(--p-mint);"></span>やすみ</span>
+    </div>
+    <div class="footnote">
+      <strong>パレット運用</strong>
+      5カテゴリ×5色のマッピングを固定し、子どもが色だけで時間帯を判別できるようにした。ピンクは「食事=楽しい・集まる」、ミントは「休息=おちつく」など、感情語と結びつけたメンタルモデルを採用。
+    </div>
+  </section>
+
+  <!-- ===== 8. 自由研究テンプレ ===== -->
+  <section class="card">
+    <span class="card__tag card__tag--mint">記録・まとめ</span>
+    <h2 class="card__title card__title--mint">
+      <svg class="icon" viewBox="0 -960 960 960" aria-hidden="true"><path d="M560-564v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-600q-38 0-73 9.5T560-564Zm0 220v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-380q-38 0-73 9t-67 27Zm0-110v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-490q-38 0-73 9.5T560-454ZM260-320q47 0 91.5 10.5T440-278v-394q-41-24-87-36t-93-12q-36 0-71.5 7T120-692v396q35-12 69.5-18t70.5-6Zm260 42q44-21 88.5-31.5T700-320q36 0 70.5 6t69.5 18v-396q-33-14-68.5-21t-71.5-7q-47 0-93 12t-87 36v394Zm-30 118q-48-38-104-59t-116-21q-42 0-82.5 11T110-198q-21 11-40.5-1T50-234v-482q0-11 5.5-21T72-752q42-22 86.5-33t101.5-11q56 0 110 14t100 42q46-28 100-42t110-14q57 0 101.5 11t86.5 33q11 5 16.5 15t5.5 21v482q0 23-19.5 35t-40.5 1q-37-20-77.5-31T700-240q-60 0-116 21t-104 59Z"/></svg>
+      自由研究テンプレート
+    </h2>
+    <p class="card__desc">紙にも転用できる落ち着いた配色で、家庭から学校提出物まで対応</p>
+    <div class="study__heading">
+      <div class="study__heading-num">1</div>
+      <div>けんきゅうのテーマ</div>
+    </div>
+    <div class="study__field">
+      <label class="study__label">なにを しらべたい?</label>
+      <textarea class="study__input" rows="2" placeholder="例) せみの ぬけがらの ちがいを しらべる"></textarea>
+    </div>
+    <div class="study__heading">
+      <div class="study__heading-num">2</div>
+      <div>よそう (こうなると おもう)</div>
+    </div>
+    <div class="study__field">
+      <label class="study__label">じぶんの よそう</label>
+      <textarea class="study__input" rows="2" placeholder="例) 木の しゅるいで 大きさが ちがうと おもう"></textarea>
+    </div>
+    <div class="study__box">
+      <strong>★ ヒント</strong>
+      しゃしんや スケッチを たくさん いれると わかりやすい じゆうけんきゅう になります。
+    </div>
+    <div class="footnote">
+      <strong>パレット運用</strong>
+      ラベンダーで章立て、ピンクをヒント枠のみに限定使用。落ち着いた配色で印刷しても上品な仕上がり。学校提出を想定し過剰演出を排除。
+    </div>
+  </section>
+
+</div>
+
+<h2 class="section-title">配色クロスリファレンス</h2>
+<section class="cross-ref">
+  <h2 class="cross-ref__title">色 × 役割 × 使用シーン 早見表</h2>
+  <p class="cross-ref__desc">新シーン作成時はこの表に従って色を選定する。色ごとに「使ってはいけない場面」も明示し、運用ブレを防ぐ。</p>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 22%;">色</th>
+        <th style="width: 22%;">役割(意味)</th>
+        <th style="width: 32%;">主な使用シーン</th>
+        <th style="width: 24%;">避ける使い方</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="cross-ref__color"><span class="cross-ref__chip" style="background:#7AB8D9;"></span>BLUE</span></td>
+        <td>集中・学習・知識</td>
+        <td>漢字ドリル基調、時間割「学校」、お絵描きツール選択中</td>
+        <td>祝祭・報酬演出には不向き(冷たく感じる)</td>
+      </tr>
+      <tr>
+        <td><span class="cross-ref__color"><span class="cross-ref__chip" style="background:#A899D1;"></span>LAVENDER</span></td>
+        <td>章立て・想像・落ち着き</td>
+        <td>自由研究の章番号、読書記録背景、ミッション集計</td>
+        <td>緊急通知・エラー(認識が薄くなる)</td>
+      </tr>
+      <tr>
+        <td><span class="cross-ref__color"><span class="cross-ref__chip" style="background:#E89BB5;"></span>PINK</span></td>
+        <td>注目・ヒント・誤答</td>
+        <td>ヒント枠・誤答警告・回答ボックス強調</td>
+        <td>大面積背景(視覚疲労の原因)</td>
+      </tr>
+      <tr>
+        <td><span class="cross-ref__color"><span class="cross-ref__chip" style="background:#8BC8B8;"></span>MINT</span></td>
+        <td>達成・正解・健康</td>
+        <td>正解フィードバック、お手伝い完了、休息時間帯</td>
+        <td>注意喚起(肯定の文脈が支配的なため)</td>
+      </tr>
+      <tr>
+        <td><span class="cross-ref__color"><span class="cross-ref__chip" style="background:#F2D984;"></span>LEMON</span></td>
+        <td>報酬・ポイント・楽しさ</td>
+        <td>シール台紙背景、ポイントチップ、お気に入り星評価</td>
+        <td>本文テキスト色(コントラスト不足)</td>
+      </tr>
+      <tr>
+        <td><span class="cross-ref__color"><span class="cross-ref__chip" style="background:#3B4252;"></span>INK</span></td>
+        <td>本文・線・縁取り</td>
+        <td>本文・キャプション・記入線</td>
+        <td>大面積塗りつぶし(重すぎる)</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="footer">
+  新Kidsパレット (Cinnamoroll × Kuromi 風) / 8 シーン同一トーン適用 / 大人にも違和感のない仕上がりを優先 / WCAG AA・タッチ44px・最小フォント16px(子ども操作要素)準拠
+</div>
+
+</div>
+</body>
+</html>
